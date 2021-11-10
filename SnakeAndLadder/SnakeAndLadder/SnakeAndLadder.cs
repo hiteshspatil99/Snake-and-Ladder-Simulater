@@ -6,8 +6,8 @@ namespace SnakeAndLadder
 {
     public class SnakeAndLadder
     {
-        public const int NO_PLAY = 0, LADDER = 1, SNAKE = 2;
-        public int playerPosition = 0;
+        public const int NO_PLAY = 0, LADDER = 1, SNAKE = 2, WINNING = 100, START = 0;
+        public int standingPositionofPlayer = 0;
         Random random = new Random();
         public int DieRolling()
         {
@@ -16,20 +16,28 @@ namespace SnakeAndLadder
         }
         public void PlayerCheck()
         {
-            int dieRolling = this.DieRolling();
-            int option = random.Next(0, 3);
-            switch (option)
+            while (standingPositionofPlayer < WINNING)
             {
-                case NO_PLAY:
-                    break;
-                case LADDER:
-                    this.playerPosition += dieRolling;
-                    break;
-                case SNAKE:
-                    this.playerPosition -= dieRolling;
-                    break;
+                int dieRoll = this.DieRolling();
+                int option = random.Next(0, 3);
+                switch (option)
+                {
+                    case NO_PLAY:
+                        break;
+                    case LADDER:
+                        this.standingPositionofPlayer += dieRoll;
+                        break;
+                    case SNAKE:
+                        this.standingPositionofPlayer -= dieRoll;
+                        if (this.standingPositionofPlayer < START)
+                        {
+                            this.standingPositionofPlayer = START;
+                        }
+                        break;
+                }
+                //Console.WriteLine("The standin Position of Player is :" + this.standingPositionofPlayer + " " + "with a roll of " + dieRoll);
             }
-            //Console.WriteLine(this.playerPosition);
+            Console.WriteLine("The Player wins the ame");
         }
     }
 }
